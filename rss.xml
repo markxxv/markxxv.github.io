@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Developer Notes]]></title><description><![CDATA[Desc]]></description><link>https://</link><generator>RSS for Node</generator><lastBuildDate>Sun, 24 Feb 2019 15:50:14 GMT</lastBuildDate><item><title><![CDATA[A web designer's guide to CSS methodologies]]></title><description><![CDATA[A CSS methodology is a set of guidelines for writing modular, reusable and scalable code. Although CSS is an easy language to write, without…]]></description><link>https:///css-methodologies/</link><guid isPermaLink="false">https:///css-methodologies/</guid><pubDate>Wed, 20 Feb 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;A CSS methodology is a set of guidelines for writing modular, reusable and scalable code. Although CSS is an easy language to write, without an agreed-upon convention, the code gets messy almost as fast as it is written. Since each CSS declaration is defined on its own line, files get huge quickly, making them a nightmare to maintain.&lt;/p&gt;
+&lt;p&gt;To solve this and other CSS implementation issues, groups of coders around the world have developed different CSS methodologies, or sets of standard practices. Each comes with its own focus, advantages and disadvantages.&lt;/p&gt;
+&lt;p&gt;In this article we will take a look at the pros and cons of a few of the most popular CSS methodologies:&lt;/p&gt;
+&lt;h2&gt;Object-Oriented CSS&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In a nutshell: Divide layout into objects, then abstract their CSS into modules&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;OOCSS involves identifying objects on a page and separating their structural and visual CSS styles into two declaration blocks. These blocks can then be reused by different elements, and changes need only be made in one place, leading to better consistency.&lt;/p&gt;
+&lt;p&gt;Declaration blocks are applied to elements using single-class selectors to avoid specificity issues. This technique also separates content from container, so objects look the same wherever they appear. Classes also decouple mark-up from CSS. Using .title instead of h2 for heading &lt;code class=&quot;language-text&quot;&gt;&amp;lt;h2 class=&amp;quot;title&amp;quot;&amp;gt;&lt;/code&gt; allows it to be changed to 	&lt;code class=&quot;language-text&quot;&gt;&amp;lt;h3 class=&amp;quot;title&amp;quot;&amp;gt;&lt;/code&gt; without changing the CSS.&lt;/p&gt;
+&lt;p&gt;To further separate HTML and CSS, class names should not include property values. A class ‘blue’ would require renaming in HTML and CSS if the colour changed.&lt;/p&gt;
+&lt;p&gt;Using OOCSS a button’s CSS and markup can be defined as:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;.button { padding: 10px 16px; }
+.primary-skin { color: blue; }
+.secondary-skin { color: green; }
+&amp;lt;button class=&amp;quot;button primary-skin&amp;quot;&amp;gt;primary skin button&amp;lt;/button&amp;gt;
+&amp;lt;button class=&amp;quot;button secondary-skin&amp;quot;&amp;gt;secondary skin button&amp;lt;/button&amp;gt;
+&amp;lt;div class=&amp;quot;primary-skin&amp;quot;&amp;gt;primary skin div&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;OOCSS introduces many useful concepts, but its lack of rules leads to variations in interpretation that can result in inconsistencies. It has, however, been used as inspiration for stricter methodologies.&lt;/p&gt;
+&lt;h2&gt;Atomic CSS&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In a nutshell: Create a class selector for every repeating CSS declaration&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;ACSS encourages developers to define single-purpose class selectors for every reusable declaration. Unlike OOCSS, which discourages CSS property values in class names, ACSS welcomes it. Using ACSS styles can be defined and applied to elements as:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;.mb-sm { margin-bottom: 16px; }
+.mb-lg { margin-bottom: 32px; }
+.color-blue { color: #1e90ff; }
+&amp;lt;div class=&amp;quot;mb-lg&amp;quot;&amp;gt;
+ &amp;lt;p class=&amp;quot;mb-lg color-blue&amp;quot;&amp;gt;Blue text&amp;lt;/p&amp;gt;
+ &amp;lt;img class=&amp;quot;mb-sm&amp;quot; /&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;There are programmatic approaches to ACSS that automatically generate CSS based on classes or attributes that users add to the HTML. Atomizer is one such tool, allowing the previous HTML to be redefined as:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;&amp;lt;div class=&amp;quot;Mb(32px)&amp;quot;&amp;gt;
+ &amp;lt;p class=&amp;quot;Mb(32px) C(#1e90ff)&amp;quot;&amp;gt;Blue text&amp;lt;/p&amp;gt;
+ &amp;lt;img class=&amp;quot;Mb(16px)&amp;quot; /&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This would automatically generate the following CSS upon build:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;.Mb\(16px\)   
+{ margin-bottom: 16px; }
+.Mb\(32px\)   
+{ margin-bottom: 32px; }
+.C\(#1e90ff\) { color: #1e90ff; }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The main benefit of ACSS is the ease of maintaining consistent code and not having to invent classes for components requiring a single CSS rule.&lt;/p&gt;
+&lt;p&gt;However, ACSS used on its own can lead to an unmanageable number of classes and bloated HTML files. It is therefore  common to only use ACSS principles to create helper classes that define consistent, reusable declaration blocks.&lt;/p&gt;
+&lt;h2&gt;Block Element Modifier&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In a nutshell: Use a standard naming convention for classes&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;BEM encourages developers to divide layouts into blocks and nested elements. Variations from the average appearance of a block or element should also be identified and applied using modifiers.&lt;/p&gt;
+&lt;p&gt;CSS declarations are applied using a single class name of format block-name for blocks and block-name&lt;strong&gt;element-name for elements, with two underscores in between. Modifier names are appended to classes, prefixed with an underscore or two hyphens for better clarity, for example block-name&lt;/strong&gt;element-name_modifer-name or block-name__element-name—modifer-name. An object is a block if it can exist without ancestors, otherwise it’s an element.&lt;/p&gt;
+&lt;p&gt;Blocks can have nested blocks and elements, but elements cannot. Modifiers must be used alongside block and element classes, not instead of them.&lt;/p&gt;
+&lt;p&gt;BEM can be applied to a list, where list-block—inline and list-block__item—active display lists horizontally and highlight items respectively:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;&amp;lt;ul class=&amp;quot;list-block list-block--inline&amp;quot;&amp;gt;
+&amp;lt;li class=&amp;quot;list-block__item&amp;quot;&amp;gt;Item 1&amp;lt;/li&amp;gt;
+ &amp;lt;li class=&amp;quot;list-block__item&amp;quot;&amp;gt;Item 2&amp;lt;/li&amp;gt;
+&amp;lt;/ul&amp;gt;
+&amp;lt;ul class=&amp;quot;list-block&amp;quot;&amp;gt;
+ &amp;lt;li class=&amp;quot;list-block__item list-block__item--active&amp;quot;&amp;gt;Item 1&amp;lt;/li&amp;gt;
+ &amp;lt;li class=&amp;quot;list-block__item&amp;quot;&amp;gt;Item 2&amp;lt;/li&amp;gt;
+&amp;lt;/ul&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;BEM is a highly effective naming convention that creates predictably behaving CSS that is easy to manage, maintain and scale. BEM does have downsides, however, including the difficulty in inventing class names for deeply nested objects, the ridiculously long class names and bloated HTML that may sometimes result, and also the lack of consistency that is caused by the inability to share CSS between objects.&lt;/p&gt;
+&lt;h2&gt;Scalable and Modular Architecture for CSS&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In a nutshell: Split CSS code across multiple files for better performance and organisation&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;SMACSS works by dividing CSS into five categories – base, layout, module, state and theme – commonly split into separate files. Base styles override the default styles and are mainly applied using element selectors:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;h1 { font-size: 20px; }
+a { text-decoration: none; }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Layout styles are for major objects like headers and sidebars. They are applied using IDs or classes with generic helper declarations optionally prefixed with l-:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;#header { height: 50px; }
+.l-right { float: right; }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Module styles are for smaller, reusable objects like buttons and lists, each commonly with its own file. They are applied using classes, with nested items classes commonly prefixed with the ancestor class:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;.list { … }
+.list--icon { … }
+.list--text { … }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;State styles are for changeable states, like hidden or disabled. They are commonly applied with class names prefixed with is- or has- and chained to other selectors:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;.button { … }
+.button.is-disabled { … }&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Theme styles are optionally used for changing the visual scheme. SMACSS provides well-organised CSS code split logically across multiple files. Using SMACSS does, however, introduce specificity traps by allowing IDs and relying on selector chaining for state and some layout declarations.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Gatsby JS a Static site generator]]></title><description><![CDATA[Gatsby is powered by Node.js and so will be more familiar territory for experienced JavaScript developers. However, several things set it…]]></description><link>https:///gatsby/</link><guid isPermaLink="false">https:///gatsby/</guid><pubDate>Tue, 18 Dec 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/7384e831087cd9ed9e18260f3e9ef991/9f6e6/cover.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 33.33333333333333%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAIAAACHqfpvAAAACXBIWXMAAAsTAAALEwEAmpwYAAABSElEQVQY02P4+vn7zx+/fv/68/vnHxD4/QfI/v///54llzriNvRnbG0KW5NhMivNaCYmYgBqBun//uvf338/v/369uUnUOfeZZcbQ1eDdIavSTWakaQ7PVl/ejqGESDNXz59+/7tx9vnn+bV7evP2rK07XBX4qYlLYdbo9al6M9IN55V5LSwyGlBnPpkLJo/f/z269evUztvT8zZWhO4vC541ezKvUDLV/cfX9lzdNOM01tmnV03+eTStkNVPsuS9aanGyPb/PEb0NtP771d1HJoatHO/owtLVFre9M296Ru7s/c2hK9dkLW1p7UTYtbD+XbzQe6Jc0Y1c9AZwNDqCVyHdDBQN+mGs2MVZ8MdGes2uR4zSkgUmNKquFMZJ0gzUAP//zxc9+KK80Ra/vTtwD9CfRkquEMYAhnGM8EkkAuiDQBCqKHNgDA1fXdVV5JmwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;cover&quot;
+        title=&quot;&quot;
+        src=&quot;/static/7384e831087cd9ed9e18260f3e9ef991/fb8a0/cover.png&quot;
+        srcset=&quot;/static/7384e831087cd9ed9e18260f3e9ef991/1a291/cover.png 148w,
+/static/7384e831087cd9ed9e18260f3e9ef991/2bc4a/cover.png 295w,
+/static/7384e831087cd9ed9e18260f3e9ef991/fb8a0/cover.png 590w,
+/static/7384e831087cd9ed9e18260f3e9ef991/526de/cover.png 885w,
+/static/7384e831087cd9ed9e18260f3e9ef991/fa2eb/cover.png 1180w,
+/static/7384e831087cd9ed9e18260f3e9ef991/9f6e6/cover.png 1200w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Gatsby is powered by Node.js and so will be more familiar territory for experienced JavaScript developers. However, several things set it apart from other similar tools.&lt;/p&gt;
+&lt;p&gt;Gatsby uses React, which means that everything is built with components, and allows it to benefit from React’s approach to DOM rendering. This means it can be picked up quickly by developers who have worked with React, but for those unfamiliar with it, learning React will be necessary.&lt;/p&gt;
+&lt;p&gt;It also utilises GraphQL at build time to retrieve data and content from data sources, which provides a modern, consistent interface to ensure that each page receives the exact data needed when it is built.&lt;/p&gt;
+&lt;p&gt;Finally, Gatsby will build pages as progressive single page apps, meaning that the entire site is downloaded and subsequent navigation is immediate.&lt;/p&gt;</content:encoded></item></channel></rss>
